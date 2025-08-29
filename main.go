@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	m, err := whisper.New("ggml-tiny.bin")
+	m, err := whisper.New("ggml-small.bin")
 	if err != nil {
 		log.Fatal(err)
 	}
