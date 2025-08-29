@@ -1,4 +1,4 @@
-.PHONY: build
+.PHONY: whisper compile
 
 ifndef UNAME_S
 UNAME_S := $(shell uname -s)
