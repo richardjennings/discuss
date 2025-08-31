@@ -2,3 +2,4 @@
 /_build
 /ggml-small.bin
 /example-stt
+/example-transcribe

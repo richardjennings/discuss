@@ -30,6 +30,7 @@ whisper:
 
 examples: whisper ggml-small.bin
 	@C_INCLUDE_PATH=${INCLUDE_PATH} LIBRARY_PATH=${LIBRARY_PATH} GGML_METAL_PATH_RESOURCES=${GGML_METAL_PATH_RESOURCES} go build -v -ldflags "-extldflags '$(EXT_LDFLAGS)'" -o example-stt example/stt/main.go
+	@C_INCLUDE_PATH=${INCLUDE_PATH} LIBRARY_PATH=${LIBRARY_PATH} GGML_METAL_PATH_RESOURCES=${GGML_METAL_PATH_RESOURCES} go build -v -ldflags "-extldflags '$(EXT_LDFLAGS)'" -o example-transcribe example/transcribe/main.go
 
 compile: whisper ggml-small.bin
 	@C_INCLUDE_PATH=${INCLUDE_PATH} LIBRARY_PATH=${LIBRARY_PATH} GGML_METAL_PATH_RESOURCES=${GGML_METAL_PATH_RESOURCES} go build -v -ldflags "-extldflags '$(EXT_LDFLAGS)'" -o discuss main.go
