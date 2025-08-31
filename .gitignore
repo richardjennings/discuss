@@ -3,3 +3,5 @@
 /ggml-small.bin
 /example-stt
 /example-transcribe
+/example-tts
+/example/tts/model

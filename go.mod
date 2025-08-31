@@ -13,4 +13,8 @@ require (
 require (
 	github.com/go-audio/audio v1.0.0 // indirect
 	github.com/go-audio/riff v1.0.0 // indirect
+	github.com/k2-fsa/sherpa-onnx-go v1.12.10 // indirect
+	github.com/k2-fsa/sherpa-onnx-go-linux v1.12.10 // indirect
+	github.com/k2-fsa/sherpa-onnx-go-macos v1.12.10 // indirect
+	github.com/k2-fsa/sherpa-onnx-go-windows v1.12.10 // indirect
 )

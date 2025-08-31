@@ -23,14 +23,30 @@ endif
 ggml-small.bin:
 	curl -L --output ggml-small.bin "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.bin?download=true"
 
+example/tts/model/kitten-nano-en-v0_1-fp16:
+	cd example/tts/model \
+	&& curl -SL -O https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/kitten-nano-en-v0_1-fp16.tar.bz2 \
+    && tar xf kitten-nano-en-v0_1-fp16.tar.bz2 \
+    && rm kitten-nano-en-v0_1-fp16.tar.bz2
+
+example/tts/model/matcha-icefall-en_US-ljspeech:
+	mkdir -p example/tts/model || true \
+	&& cd example/tts/model \
+	&& curl -SL -O https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/matcha-icefall-en_US-ljspeech.tar.bz2 \
+	&& tar xf matcha-icefall-en_US-ljspeech.tar.bz2 \
+	&& rm matcha-icefall-en_US-ljspeech.tar.bz2 \
+    && cd matcha-icefall-en_US-ljspeech \
+	&& curl -SL -O https://github.com/k2-fsa/sherpa-onnx/releases/download/vocoder-models/vocos-22khz-univ.onnx
+
 whisper:
 	git submodule update --init --recursive
 	cd whisper.cpp/bindings/go && make clean
 	cd whisper.cpp/bindings/go && make whisper
 
-examples: whisper ggml-small.bin
+examples: whisper ggml-small.bin example/tts/model/matcha-icefall-en_US-ljspeech
 	@C_INCLUDE_PATH=${INCLUDE_PATH} LIBRARY_PATH=${LIBRARY_PATH} GGML_METAL_PATH_RESOURCES=${GGML_METAL_PATH_RESOURCES} go build -v -ldflags "-extldflags '$(EXT_LDFLAGS)'" -o example-stt example/stt/main.go
 	@C_INCLUDE_PATH=${INCLUDE_PATH} LIBRARY_PATH=${LIBRARY_PATH} GGML_METAL_PATH_RESOURCES=${GGML_METAL_PATH_RESOURCES} go build -v -ldflags "-extldflags '$(EXT_LDFLAGS)'" -o example-transcribe example/transcribe/main.go
+	go build -o example-tts example/tts/main.go
 
 compile: whisper ggml-small.bin
 	@C_INCLUDE_PATH=${INCLUDE_PATH} LIBRARY_PATH=${LIBRARY_PATH} GGML_METAL_PATH_RESOURCES=${GGML_METAL_PATH_RESOURCES} go build -v -ldflags "-extldflags '$(EXT_LDFLAGS)'" -o discuss main.go
